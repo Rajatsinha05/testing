@@ -52,3 +52,7 @@ jobs:
       # Step 8: Print Results
       - name: Print Cypress Results
         run: cat .github/workflows/cypress/results/*.json
+
+      # Step 9: Run `index.js` Script
+      - name: Run Index.js
+        run: node .github/workflows/index.js
