@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-12-29T19:52:15.667Z",
+    "end": "2024-12-29T19:52:16.238Z",
+    "duration": 571,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "14f9eabd-70a0-4cff-8994-28283526e8bb",
+      "title": "",
+      "fullFile": ".github/workflows/cypress/e2e/test.cy.js",
+      "file": ".github/workflows/cypress/e2e/test.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "e7166823-99c8-4434-8597-807708694330",
+          "title": "Express Server Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should return a welcome message on GET /",
+              "fullTitle": "Express Server Tests Should return a welcome message on GET /",
+              "timedOut": null,
+              "duration": 215,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Send a GET request to the root endpoint\ncy.request(\"GET\", `${baseUrl}/`).then(response => {\n  // Assert the response status\n  expect(response.status).to.eq(200);\n  // Assert the response body\n  expect(response.body).to.eq(\"Welcome to the world!.\");\n});",
+              "err": {
+                "message": "AssertionError: expected 'Welcome to the world!' to equal 'Welcome to the world!.'",
+                "estack": "AssertionError: expected 'Welcome to the world!' to equal 'Welcome to the world!.'\n    at Context.eval (webpack:///./cypress/e2e/test.cy.js:11:31)",
+                "diff": "- 'Welcome to the world!'\n+ 'Welcome to the world!.'\n"
+              },
+              "uuid": "2ea4e8d1-f163-4f1a-be2e-3677e2f14032",
+              "parentUUID": "e7166823-99c8-4434-8597-807708694330",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "2ea4e8d1-f163-4f1a-be2e-3677e2f14032"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 215,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": ".github/workflows/cypress/results",
+        "overwrite": true,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
