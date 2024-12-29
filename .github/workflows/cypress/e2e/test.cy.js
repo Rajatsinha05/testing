@@ -8,7 +8,7 @@ describe("Express Server Tests", () => {
       expect(response.status).to.eq(200);
 
       // Assert the response body
-      expect(response.body).to.eq("Welcome to the world!.");
+      expect(response.body).to.eq("Welcome to the world!");
     });
   });
 });
