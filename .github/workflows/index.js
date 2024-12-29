@@ -1,5 +1,11 @@
 const fs = require("fs");
-fs.readFile("./cypress/results/mochawesome.json", "utf-8", (err, data) => {
+const path = require("path");
+const resultPath = path.resolve(
+  ".github/workflows/cypress/results/mochawesome.json"
+);
+
+// Read the JSON results file
+fs.readFile(resultPath, "utf-8", (err, data) => {
   if (err) {
     console.log(err);
   } else {

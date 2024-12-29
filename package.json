@@ -18,7 +18,8 @@
   "author": "Rajat Sinha",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "glob": "^11.0.0"
   },
   "devDependencies": {
     "cypress": "^13.17.0",
