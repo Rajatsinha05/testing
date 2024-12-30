@@ -1,15 +1,15 @@
 {
   "stats": {
     "suites": 1,
-    "tests": 1,
+    "tests": 2,
     "passes": 1,
     "pending": 0,
-    "failures": 0,
-    "start": "2024-12-30T06:58:22.904Z",
-    "end": "2024-12-30T06:58:22.952Z",
-    "duration": 48,
-    "testsRegistered": 1,
-    "passPercent": 100,
+    "failures": 1,
+    "start": "2024-12-30T07:04:27.624Z",
+    "end": "2024-12-30T07:04:28.002Z",
+    "duration": 378,
+    "testsRegistered": 2,
+    "passPercent": 50,
     "pendingPercent": 0,
     "other": 0,
     "hasOther": false,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "00a3fbd7-6bf8-4e7e-bd55-da2c98c4eedc",
+      "uuid": "58bc751c-ae56-4f5c-8666-1161a8d7989b",
       "title": "",
       "fullFile": ".github/workflows/cypress/e2e/test.cy.js",
       "file": ".github/workflows/cypress/e2e/test.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "b9eef974-6bc7-4af7-908b-da4a0c248c1f",
+          "uuid": "e4484c56-1d76-49ca-83d8-d71365dd299d",
           "title": "Basic Server Tests",
           "fullFile": "",
           "file": "",
@@ -47,20 +47,44 @@
               "context": null,
               "code": "// Visit the root URL\ncy.request(\"GET\", \"/\").then(response => {\n  // Check the status code\n  expect(response.status).to.equal(200);\n  // Check the response body\n  expect(response.body).to.equal(\"Welcome to the world!\");\n});",
               "err": {},
-              "uuid": "604ed98e-9603-4919-b5ca-105fb1157241",
-              "parentUUID": "b9eef974-6bc7-4af7-908b-da4a0c248c1f",
+              "uuid": "8f755316-87db-4b78-a3b3-742835e9978d",
+              "parentUUID": "e4484c56-1d76-49ca-83d8-d71365dd299d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should return the correct welcome message",
+              "fullTitle": "Basic Server Tests should return the correct welcome message",
+              "timedOut": null,
+              "duration": 113,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Visit the root URL\ncy.request(\"GET\", \"/\").then(response => {\n  // Check the status code\n  expect(response.status).to.equal(200);\n  // Check the response body\n  expect(response.body).to.equal(\"Welcome to the world! .\");\n});",
+              "err": {
+                "message": "AssertionError: expected 'Welcome to the world!' to equal 'Welcome to the world! .'",
+                "estack": "AssertionError: expected 'Welcome to the world!' to equal 'Welcome to the world! .'\n    at Context.eval (webpack:///./cypress/e2e/test.cy.js:20:31)",
+                "diff": "- 'Welcome to the world!'\n+ 'Welcome to the world! .'\n"
+              },
+              "uuid": "27d790f2-d6a4-47f1-8c5b-d4c5e763eb7d",
+              "parentUUID": "e4484c56-1d76-49ca-83d8-d71365dd299d",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "604ed98e-9603-4919-b5ca-105fb1157241"
+            "8f755316-87db-4b78-a3b3-742835e9978d"
           ],
-          "failures": [],
+          "failures": [
+            "27d790f2-d6a4-47f1-8c5b-d4c5e763eb7d"
+          ],
           "pending": [],
           "skipped": [],
-          "duration": 39,
+          "duration": 152,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
