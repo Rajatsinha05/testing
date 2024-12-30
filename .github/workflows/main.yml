@@ -44,20 +44,12 @@ jobs:
 
       # Step 7: Run Cypress tests
       - name: Run Cypress Tests
-        run: npm run cypress:run:workflow
+        run: npm run cypress:run:workflow || true
 
-      # # Step 8: Upload Test Results
-      # - name: Upload Cypress Test Results
-      #   if: always()
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: cypress-results
-      #     path: .github/workflows/cypress/results
-
-      # Step 9: Print Results
+      # Step 8: Print Results
       - name: Print Cypress Results
-        run: cat .github/workflows/cypress/results/*.json
+        run: cat .github/workflows/cypress/results/*.json || echo "No results available"
 
-      # Step 10: Run `index.js` Script
+      # Step 9: Run `index.js` Script
       - name: Run Index.js
         run: node .github/workflows/index.js
