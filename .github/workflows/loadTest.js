@@ -47,19 +47,19 @@ const getTestFiles = async (fileName, token) => {
     }
 
     const fileData = await response.text(); // Use `response.text()` for non-JSON responses
-    console.log("File Data:", fileData);
+  
 
     // Resolve the write path relative to the current directory
     const writePath = path.resolve(__dirname, "cypress/e2e/test.cy.js");
 
     // Write the fetched file data
-    // fs.writeFile(writePath, fileData, (writeErr) => {
-    //   if (writeErr) {
-    //     console.error(`Error writing test file: ${writeErr.message}`);
-    //   } else {
-    //     console.log(`Test file successfully written to: ${writePath}`);
-    //   }
-    // });
+    fs.writeFile(writePath, fileData, (writeErr) => {
+      if (writeErr) {
+        console.error(`Error writing test file: ${writeErr.message}`);
+      } else {
+        console.log(`Test file successfully written to: ${writePath}`);
+      }
+    });
   } catch (error) {
     console.error(`Error fetching test files: ${error.message}`);
   }

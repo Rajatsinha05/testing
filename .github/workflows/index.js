@@ -33,7 +33,7 @@ fs.readFile(metadataPath, "utf-8", (err, data) => {
 function processTestResult(filePath, token, uniqueCode) {
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
-      console.log("err: ", err);
+      
 
       return;
     }
@@ -123,10 +123,10 @@ async function postResult(data, token) {
     );
 
     if (!response.ok) {
-      console.log("response: ", response);
+      
       throw new Error(`Failed to post result: ${response.statusText}`);
     }
   } catch (error) {
-    console.log("error: ", error);
+    
   }
 }
