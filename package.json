@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cd _test && npx cypress run",
     "cypress:open": "cd _test && npx cypress open",
-    "cypress:run:workflow": "npx cypress run --config-file .github/workflows/cypress.config.js --browser chrome || true",
+    "cypress:run:workflow": "npx cypress run --config-file .github/workflows/cypress.config.js || true",
     "start": "node index.js"
   },
   "keywords": [
