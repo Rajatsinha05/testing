@@ -11,12 +11,5 @@ module.exports = defineConfig({
     video: false,
     screenshots: false,
     baseUrl: `http://localhost:${process.env.PORT || 8090}`, // Dynamic port
-    reporter: "mochawesome",
-    reporterOptions: {
-      reportDir: "/.github/workflows/cypress/results",
-      overwrite: true,
-      html: false,
-      json: true,
-    },
   },
 });

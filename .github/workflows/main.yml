@@ -28,28 +28,37 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # Step 4: Run a test file
+      # Step 4: Install MongoDB
+      - name: Install MongoDB
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mongodb
+          sudo systemctl start mongodb
+          sudo systemctl enable mongodb
+
+      # Step 5: Verify MongoDB Installation
+      - name: Verify MongoDB Installation
+        run: |
+          mongo --eval "db.runCommand({ connectionStatus: 1 })"
+
+      # Step 6: Run a test file
       - name: Run Test File
         run: node .github/workflows/loadTest.js
 
-      # Step 5: Start the server
+      # Step 7: Start the server
       - name: Start Server
         run: npm start &
         env:
           PORT: 8090
 
-      # Step 6: Wait for the server to be ready
+      # Step 8: Wait for the server to be ready
       - name: Wait for Server
         run: npx wait-on http://localhost:8090
 
-      # Step 7: Run Cypress tests
+      # Step 9: Run Cypress tests
       - name: Run Cypress Tests
         run: npm run cypress:run:workflow || true
 
-      # Step 8: Print Results
-      - name: Print Cypress Results
-        run: cat .github/workflows/cypress/results/*.json || echo "No results available"
-
-      # Step 9: Run `index.js` Script
+      # Step 10: Run `index.js` Script
       - name: Run Index.js
         run: node .github/workflows/index.js
