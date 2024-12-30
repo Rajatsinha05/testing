@@ -4,8 +4,8 @@
   "description": "A project for testing Cypress and Jest integrations",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest",
-    "cypress:run:test": "cd _test && npx cypress run",
+    "test": "cd _test && npx cypress run",
+    "cypress:open": "cd _test && npx cypress open",
     "cypress:run:workflow": "npx cypress run --config-file .github/workflows/cypress.config.js",
     "start": "node index.js"
   },
@@ -18,6 +18,7 @@
   "author": "Rajat Sinha",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "glob": "^11.0.0"
   },
