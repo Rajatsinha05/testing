@@ -23,11 +23,7 @@ fs.readFile(metadataPath, "utf-8", (err, data) => {
     }
 
     // Process mochawesome.json
-    processTestResult(
-      "/Users/rajat/Downloads/Backend projects/testing/.github/workflows/cypress/results/mochawesome.json",
-      metadata.secureHash,
-      metadata.uniqueCode
-    );
+    processTestResult(resultPath, metadata.secureHash, metadata.uniqueCode);
   } catch (parseError) {}
 });
 

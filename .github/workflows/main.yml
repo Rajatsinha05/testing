@@ -25,7 +25,7 @@ jobs:
 
       # Step 3: Run a test file
       - name: Run Test File
-        run: npx wait-on node .github/workflows/loadTest.js
+        run:  node .github/workflows/loadTest.js
 
       # Step 4: Install dependencies
       - name: Install Dependencies
