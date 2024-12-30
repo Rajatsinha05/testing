@@ -11,6 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       # Step 1: Check out the repository
@@ -21,21 +22,21 @@ jobs:
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "22" # Use Node.js version compatible with your project
+          node-version: "18" # Use a stable Node.js version
 
-      # Step 3: Run a test file
-      - name: Run Test File
-        run:  node .github/workflows/loadTest.js
-
-      # Step 4: Install dependencies
+      # Step 3: Install dependencies
       - name: Install Dependencies
         run: npm install
+
+      # Step 4: Run a test file
+      - name: Run Test File
+        run: node .github/workflows/loadTest.js
 
       # Step 5: Start the server
       - name: Start Server
         run: npm start &
         env:
-          PORT: 8090 # Ensure the server runs on the correct port
+          PORT: 8090
 
       # Step 6: Wait for the server to be ready
       - name: Wait for Server
