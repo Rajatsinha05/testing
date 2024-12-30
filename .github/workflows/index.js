@@ -37,6 +37,8 @@ fs.readFile(metadataPath, "utf-8", (err, data) => {
 function processTestResult(filePath, token, uniqueCode) {
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
+      console.log("err: ", err);
+
       return;
     }
 
@@ -75,6 +77,7 @@ function parseToNodeTestResult(data) {
           failedTestsWithReasons.push({
             testName: test.title,
             reason: test.err?.message || "Unknown reason",
+            // reason: "Unknown reason",
             marks,
           });
         }
@@ -111,16 +114,20 @@ function extractMarksFromTitle(title) {
  */
 async function postResult(data, token) {
   try {
-    const response = await fetch("http://localhost:8099/api/sandbox/result", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      "https://practiceapi.rnwmultimedia.com/api/sandbox/result",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     if (!response.ok) {
+      console.log("response: ", response);
       throw new Error(`Failed to post result: ${response.statusText}`);
     }
   } catch (error) {

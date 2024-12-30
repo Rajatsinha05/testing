@@ -34,7 +34,7 @@ fs.readFile(filePath, "utf-8", (err, data) => {
 const getTestFiles = async (fileName, token) => {
   try {
     const response = await fetch(
-      `http://localhost:8099/api/sandbox/test-files/${fileName}`,
+      `https://practiceapi.rnwmultimedia.com/api/sandbox/test-files/${fileName}`,
       {
         headers: {
           Authorization: `Bearer ${token}`, // Add token dynamically
