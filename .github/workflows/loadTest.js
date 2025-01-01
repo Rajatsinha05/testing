@@ -1,9 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 
-
 // Resolve the path to metadata.json
-const filePath = path.resolve(__dirname, "../../metadata.json");
+// const filePath = path.resolve(__dirname, "../../metadata.json");
+const filePath = path.resolve(__dirname, "metadata.json");
+// console.log("filePath: ", filePath);
 
 /**
  * Reads and parses the JSON file.
@@ -17,7 +18,9 @@ fs.readFile(filePath, "utf-8", (err, data) => {
   try {
     const jsonData = JSON.parse(data);
     if (!jsonData.assetTag || !jsonData.secureHash) {
-      throw new Error("Required fields 'assetTag' or 'secureHash' are missing in metadata.json");
+      throw new Error(
+        "Required fields 'assetTag' or 'secureHash' are missing in metadata.json"
+      );
     }
 
     getTestFiles(jsonData.assetTag, jsonData.secureHash);
@@ -43,11 +46,12 @@ const getTestFiles = async (fileName, token) => {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch test files: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Failed to fetch test files: ${response.status} ${response.statusText}`
+      );
     }
 
     const fileData = await response.text(); // Use `response.text()` for non-JSON responses
-  
 
     // Resolve the write path relative to the current directory
     const writePath = path.resolve(__dirname, "cypress/e2e/test.cy.js");

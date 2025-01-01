@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Resolve paths
-const metadataPath = path.resolve(__dirname, "../../metadata.json");
+const metadataPath =  path.resolve(__dirname, "metadata.json");
 const resultPath = path.resolve(
   ".github/workflows/cypress/results/mochawesome.json"
 );
