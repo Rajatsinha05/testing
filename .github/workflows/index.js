@@ -2,10 +2,12 @@ const fs = require("fs");
 const path = require("path");
 
 // Resolve paths
-const metadataPath =  path.resolve(__dirname, "metadata.json");
+const metadataPath = path.resolve(__dirname, "metadata.json");
 const resultPath = path.resolve(
   ".github/workflows/cypress/results/mochawesome.json"
 );
+const gitHubLink = process.argv[2];
+console.log("gitHubLink: ", gitHubLink);
 
 /**
  * Read and process metadata.json
@@ -33,8 +35,6 @@ fs.readFile(metadataPath, "utf-8", (err, data) => {
 function processTestResult(filePath, token, uniqueCode) {
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
-      
-
       return;
     }
 
@@ -64,10 +64,9 @@ function parseToNodeTestResult(data) {
   data.results.forEach((result) => {
     result.suites.forEach((suite) => {
       suite.tests.forEach((test) => {
-        const marks = extractMarksFromTitle(test.title);
-        totalMarks += marks;
-
         if (test.state === "passed") {
+          const marks = extractMarksFromTitle(test.title);
+          totalMarks += marks;
           passedTests.push(test.title);
         } else if (test.state === "failed") {
           failedTestsWithReasons.push({
@@ -109,6 +108,7 @@ function extractMarksFromTitle(title) {
  * Post result to the backend
  */
 async function postResult(data, token) {
+  console.log("data: ", data);
   try {
     const response = await fetch(
       "https://practiceapi.rnwmultimedia.com/api/sandbox/result",
@@ -123,10 +123,7 @@ async function postResult(data, token) {
     );
 
     if (!response.ok) {
-      
       throw new Error(`Failed to post result: ${response.statusText}`);
     }
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 }

@@ -46,12 +46,9 @@ jobs:
       - name: Run Cypress Tests
         run: npm run cypress:run:workflow || true
 
-      # Step 8: Run `index.js` Script
-      - name: Run Index.js
-        run: node .github/workflows/index.js
-
-      # Step 9: Generate Link to Files at Commit
+      # Step 8: Generate Link to Files at Commit
       - name: Generate Link to Files
+        id: generate_link
         run: |
           REPO_URL=$(git config --get remote.origin.url)
           COMMIT_SHA=$(git rev-parse HEAD)
@@ -60,9 +57,6 @@ jobs:
           echo "Browse the repository files at this commit: $LINK"
           echo "::set-output name=commit_files_link::$LINK"
 
-      # Step 10: Display Clickable Link in Workflow Logs
-      - name: Display Clickable Link
-        run: |
-          echo "You can view all files in this commit at the following link:"
-          COMMIT_FILES_LINK=${{ steps.generate_link.outputs.commit_files_link }}
-          echo "[Browse files]($COMMIT_FILES_LINK)"
+      # Step 9: Run `index.js` Script with GitHub Link
+      - name: Run Index.js
+        run: node .github/workflows/index.js ${{ steps.generate_link.outputs.commit_files_link }}
