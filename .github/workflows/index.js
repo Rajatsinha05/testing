@@ -7,7 +7,6 @@ const resultPath = path.resolve(
   ".github/workflows/cypress/results/mochawesome.json"
 );
 const gitHubLink = process.argv[2];
-console.log("gitHubLink: ", gitHubLink);
 
 /**
  * Read and process metadata.json
@@ -25,14 +24,26 @@ fs.readFile(metadataPath, "utf-8", (err, data) => {
     }
 
     // Process mochawesome.json
-    processTestResult(resultPath, metadata.secureHash, metadata.uniqueCode);
+    processTestResult(
+      resultPath,
+      metadata.secureHash,
+      metadata.uniqueCode,
+      metadata.pId
+    );
   } catch (parseError) {}
 });
 
 /**
  * Process mochawesome.json
  */
-function processTestResult(filePath, token, uniqueCode) {
+function processTestResult(filePath, token, uniqueCode, pId) {
+  console.log(
+    "filePath, token, uniqueCode, pId: ",
+    filePath,
+    token,
+    uniqueCode,
+    pId
+  );
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
       return;
@@ -46,7 +57,8 @@ function processTestResult(filePath, token, uniqueCode) {
 
       // Add student_id
       nodeTestResult.student = { id: uniqueCode };
-
+      nodeTestResult.githubLink = gitHubLink;
+      nodeTestResult.cyProject = pId;
       // Post the result to the backend
       postResult(nodeTestResult, token);
     } catch (parseError) {}
@@ -108,7 +120,6 @@ function extractMarksFromTitle(title) {
  * Post result to the backend
  */
 async function postResult(data, token) {
-  console.log("data: ", data);
   try {
     const response = await fetch(
       "https://practiceapi.rnwmultimedia.com/api/sandbox/result",
