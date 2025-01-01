@@ -50,11 +50,19 @@ jobs:
       - name: Run Index.js
         run: node .github/workflows/index.js
 
-      # Step 9: Print Current Repo Link with Commit
-      - name: Print Repo Link with Commit
+      # Step 9: Generate Link to Files at Commit
+      - name: Generate Link to Files
         run: |
           REPO_URL=$(git config --get remote.origin.url)
           COMMIT_SHA=$(git rev-parse HEAD)
-          LINK="${REPO_URL%.git}/commit/$COMMIT_SHA"
-          echo "Repository link with commit: $LINK"
-          echo "::set-output name=commit_link::$LINK"
+          REPO_URL_CLEAN="${REPO_URL%.git}"
+          LINK="$REPO_URL_CLEAN/tree/$COMMIT_SHA"
+          echo "Browse the repository files at this commit: $LINK"
+          echo "::set-output name=commit_files_link::$LINK"
+
+      # Step 10: Display Clickable Link in Workflow Logs
+      - name: Display Clickable Link
+        run: |
+          echo "You can view all files in this commit at the following link:"
+          COMMIT_FILES_LINK=${{ steps.generate_link.outputs.commit_files_link }}
+          echo "[Browse files]($COMMIT_FILES_LINK)"
