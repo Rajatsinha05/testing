@@ -14,52 +14,47 @@ jobs:
     timeout-minutes: 20
 
     steps:
+      # Step 1: Check out the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "18" # Use a stable Node.js version
 
+      # Step 3: Install dependencies
       - name: Install Dependencies
         run: npm install
 
-      - name: Install libssl1.1
-        run: |
-          wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-          sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
-          sudo apt-get install -f -y
-
-      - name: Install MongoDB
-        run: |
-          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-          echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-org
-          sudo mkdir -p /data/db
-          sudo chown -R mongodb:mongodb /data/db
-          sudo systemctl start mongod
-          sudo systemctl enable mongod
-
-      - name: Verify MongoDB Installation
-        run: |
-          mongo --eval "db.runCommand({ connectionStatus: 1 })"
-
+      # Step 4: Run a test file
       - name: Run Test File
         run: node .github/workflows/loadTest.js
 
+      # Step 5: Start the server
       - name: Start Server
         run: npm start &
         env:
           PORT: 8090
 
+      # Step 6: Wait for the server to be ready
       - name: Wait for Server
         run: npx wait-on http://localhost:8090
 
+      # Step 7: Run Cypress tests
       - name: Run Cypress Tests
-        run: |
-          npm run cypress:run:workflow || true
+        run: npm run cypress:run:workflow || true
 
+      # Step 8: Run `index.js` Script
       - name: Run Index.js
         run: node .github/workflows/index.js
+
+      # Step 9: Print Current Repo Link with Commit
+      - name: Print Repo Link with Commit
+        run: |
+          REPO_URL=$(git config --get remote.origin.url)
+          COMMIT_SHA=$(git rev-parse HEAD)
+          LINK="${REPO_URL%.git}/commit/$COMMIT_SHA"
+          echo "Repository link with commit: $LINK"
+          echo "::set-output name=commit_link::$LINK"
